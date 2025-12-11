@@ -9,6 +9,7 @@ import AdminDashboard from './components/AdminDashboard';
 import { Sidebar } from './components/Sidebar';
 import TOC from './components/TOC';
 import AboutPage from './components/AboutPage';
+import AdminGate from './components/AdminGate';
 import { Menu, X, Sun, Moon, ArrowRight, ArrowLeft, Calendar, Clock, Tag } from './components/Icons';
 
 // --- Theme Context ---
@@ -259,12 +260,19 @@ const Layout: React.FC = () => {
 
         {/* Main Scrollable Area */}
         <main className="flex-1 min-w-0 px-6 lg:px-12 pb-12">
-          <Routes>
-             <Route path="/" element={<HomePage searchTerm={searchTerm} selectedTag={selectedTag} />} />
-             <Route path="/about" element={<AboutPage />} />
-             <Route path="/post/:slug" element={<ArticlePage />} />
-             <Route path="/admin" element={<AdminDashboard />} />
-          </Routes>
+         <Routes>
+            <Route path="/" element={<HomePage searchTerm={searchTerm} selectedTag={selectedTag} />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/post/:slug" element={<ArticlePage />} />
+            <Route
+              path="/admin"
+              element={
+                <AdminGate>
+                  <AdminDashboard />
+                </AdminGate>
+              }
+            />
+         </Routes>
         </main>
       </div>
     </div>
