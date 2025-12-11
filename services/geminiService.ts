@@ -1,13 +1,36 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the API client
-// Note: In a real production build, ensure process.env.API_KEY is replaced during build time or available in runtime.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey =
+  process.env.API_KEY ||
+  process.env.GEMINI_API_KEY ||
+  (typeof import.meta !== 'undefined' ? import.meta.env?.VITE_GEMINI_API_KEY : undefined);
+
+const getClient = (): GoogleGenAI | null => {
+  if (!apiKey) {
+    console.warn("Gemini API key missing; AI assistant disabled.");
+    return null;
+  }
+
+  try {
+    return new GoogleGenAI({ apiKey });
+  } catch (error) {
+    console.error("Failed to initialize Gemini API client:", error);
+    return null;
+  }
+};
+
+const ai = getClient();
+
+export const isGeminiEnabled = Boolean(ai);
 
 export const generateBlogInsight = async (
   context: string,
   prompt: string
 ): Promise<string> => {
+  if (!ai) {
+    return "AI assistant is disabled because GEMINI_API_KEY is not configured.";
+  }
+
   try {
     const modelId = 'gemini-2.5-flash';
     
