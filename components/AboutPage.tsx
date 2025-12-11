@@ -8,18 +8,18 @@ const AboutPage: React.FC = () => {
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">关于我</h1>
         <div className="prose prose-lg dark:prose-invert text-gray-600 dark:text-gray-300">
           <p className="lead">
-            你好，我是 TechnoLogos 的创建者。我是一名热衷于探索软件架构与人工智能交叉领域的全栈工程师。
+            你好，我是 TechnoLogos 的创建者。我是一名探索ai的普通人。
           </p>
           <p>
-            在这个日新月异的技术时代，我相信“系统思维”是解决复杂问题的关键。这个博客是我思考、记录和分享技术见解的数字花园。我主要关注以下领域：
+            在这个日新月异的技术时代，我相信“系统思维”是解决复杂问题的关键。这个博客是我思考、记录和分享技术见解与生活感悟的数字花园。我主要关注以下领域：
           </p>
           <ul>
-            <li><strong>前端工程化</strong>：React 生态、Server Components、Web 性能优化。</li>
+            <li><strong>生活哲思</strong>：记录点滴想法。</li>
             <li><strong>AI 基础设施</strong>：LLM 应用开发、RAG 架构、Agent 设计模式。</li>
-            <li><strong>UI/UX 设计</strong>：极简主义设计哲学、设计系统构建。</li>
+            <li><strong>读书感悟</strong>：浏览书籍。</li>
           </ul>
           <p>
-            除写代码外，我也热衷于摄影和科幻小说。我相信技术应当服务于人文，创造更美好的体验。
+            除外，我也热衷于摄影和科幻小说。我相信技术应当服务于人文，创造更美好的体验。
           </p>
         </div>
       </div>

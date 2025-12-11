@@ -4,11 +4,11 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: '1',
     slug: 'future-of-agi',
-    title: '面向 AGI 时代的软件架构变革',
-    excerpt: '探讨在下一代通用人工智能模型背景下，软件系统面临的可扩展性挑战与范式转变。',
-    date: '2023年10月12日',
+    title: '国内如何使用claude code 与 codex',
+    excerpt: '快速掌握cli工具配置。',
+    date: '2025年12月12日',
     readTime: '5 分钟阅读',
-    tags: ['AI', '架构', '深度研究'],
+    tags: ['AI', '架构', '快速入门'],
     content: `
 ## 范式转移
 
