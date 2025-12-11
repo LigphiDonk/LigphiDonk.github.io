@@ -141,6 +141,43 @@ const ArticlePage: React.FC = () => {
   const prevPost = postIndex < BLOG_POSTS.length - 1 ? BLOG_POSTS[postIndex + 1] : null;
   const nextPost = postIndex > 0 ? BLOG_POSTS[postIndex - 1] : null;
 
+  const CodeBlock: React.FC<any> = ({ inline, className, children, ...props }) => {
+    const [copied, setCopied] = useState(false);
+    const code = String(children).replace(/\n$/, '');
+    const language = className?.replace('language-', '') || '';
+
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+    };
+
+    if (inline) {
+      return <code className={className} {...props}>{children}</code>;
+    }
+
+    return (
+      <div className="relative group">
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="absolute top-3 right-3 text-xs px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 text-gray-600 dark:text-gray-300 shadow-sm opacity-0 group-hover:opacity-100 transition"
+        >
+          {copied ? '已复制' : '复制'}
+        </button>
+        <pre className={className} {...props}>
+          <code className={className} data-language={language}>
+            {code}
+          </code>
+        </pre>
+      </div>
+    );
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
@@ -159,7 +196,8 @@ const ArticlePage: React.FC = () => {
     h3: ({node, ...props}: any) => {
        const id = props.children?.toString().toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-') || '';
        return <h3 id={id} className="scroll-mt-24" {...props}>{props.children}</h3>;
-    }
+    },
+    code: CodeBlock
   };
 
   return (
