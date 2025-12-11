@@ -87,19 +87,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <Github className="w-4 h-4" />
           GitHub
         </a>
-        <NavLink
-          to="/admin"
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-              isActive 
-                ? 'bg-gray-100 dark:bg-gray-800 text-black dark:text-white' 
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-black dark:hover:text-white'
-            }`
-          }
-        >
-          <Sparkles className="w-4 h-4" />
-          管理后台
-        </NavLink>
       </nav>
 
       {/* Tags */}
