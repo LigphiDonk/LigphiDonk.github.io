@@ -39,25 +39,43 @@ fn main() {
   },
   {
     id: '2',
-    slug: 'react-server-components',
-    title: '深入理解 React Server Components：回顾与展望',
-    excerpt: '深度解析 RSC 对前端架构、数据获取策略以及用户体验带来的深远影响。',
-    date: '2023年9月28日',
+    slug: '日常对话使用',
+    title: '日常使用接入api教学',
+    excerpt: '快速教学',
+    date: '2025年12月11日',
     readTime: '8 分钟阅读',
-    tags: ['React', '前端', 'Web开发'],
+    tags: ['Cherrystudio', 'chat', 'api'],
     content: `
-## 移动边界
+## 电脑端使用方式推荐
 
-React Server Components (RSC) 代表了自 Hooks 以来 React 生态系统中最重要的变革。通过允许组件在服务器端独占渲染，我们显著减少了发送到客户端的 Bundle 体积，并提升了首次内容绘制 (FCP) 的速度。
+推荐接入cherry studio，方便日常对话和使用ai大模型
 
-### 核心优势
+### 详细指南
 
-*   **零 Bundle 体积**: RSC 中使用的依赖项不会包含在客户端 Bundle 中。
-*   **直接数据库访问**: 直接从组件中查询数据库，无需中间层 API。
-*   **自动代码分割**: 服务器组件引入的客户端组件会自动进行代码分割。
+1.官网下载[Cherry Studio](https://www.cherry-ai.com/)
+![[Pasted image 20251212175036.png]]
+2.安装软件 win mac下载对应的安装包进行安装
+3.进入软件点击设置![[Pasted image 20251212175305.png]]
+添加模型服务平台 keepcode![[Pasted image 20251212175412.png]]
+4.接下来进入keepcode官网[[https://api.keepgo.icu/]]在api令牌处点击添加令牌![[Pasted image 20251212175606.png]]
+设置名称选择你想用的模型的对应分组 注意分组的倍率，不同的渠道有不同的模型的倍率![[Pasted image 20251212175823.png]]
+注意开启无限额度，以防后期余额不足重新配置
+5.![[Pasted image 20251212175946.png]]
+创建好后记得复制密钥，然后回到我们的cherrystudio
+\`\`\`
+  https://api.keepgo.icu
+  https://api.keepgo.icu/v1 
+  https://api.keepgo.icu/v1/chat/completions
+\`\`\`
+不同的软件可能使用不同的base url一般我们选择第一个
+![[Pasted image 20251212181004.png]]
 
-然而，这也引入了缓存和状态管理的复杂性。客户端与服务器之间的边界现在变得流动，要求工程师具备全栈视角的架构能力。
-    `
+将复制好的密钥添加进去，最后要在你的分组下选择一个你想用的模型，比如我刚才选择的是AZ分组我现在打算使用gpt5.1
+![[Pasted image 20251212180338.png]]
+复制模型名称![[Pasted image 20251212180729.png]]
+在上方选择你对应分组的模型，就可以聊天了![[Pasted image 20251212181033.png]]
+
+  `
   },
   {
     id: '3',
