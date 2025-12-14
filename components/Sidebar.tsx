@@ -29,13 +29,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span className="text-white dark:text-black font-bold text-lg">TL</span>
             </div>
             <div>
-                <h1 className="font-bold text-lg leading-tight tracking-tight text-gray-900 dark:text-white">TechnoLogos</h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400">构建未来的代码</p>
+                <h1 className="font-bold text-lg leading-tight tracking-tight text-gray-900 dark:text-white">keepgo</h1>
+                <p className="text-xs text-gray-500 dark:text-gray-400">技术分享博客</p>
             </div>
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-4">
-          专注探讨软件架构、AGI 以及下一代人机交互设计的技术博客。
-        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-4">技术分享博客</p>
       </div>
 
       {/* Search */}
@@ -122,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
       
       <div className="mt-auto pt-6 text-xs text-gray-400">
-         © {new Date().getFullYear()} TechnoLogos
+         © {new Date().getFullYear()} keepgo
       </div>
     </aside>
   );

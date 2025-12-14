@@ -12,6 +12,8 @@ import AboutPage from './components/AboutPage';
 import AdminGate from './components/AdminGate';
 import { Menu, X, Sun, Moon, ArrowRight, ArrowLeft, Calendar, Clock, Tag } from './components/Icons';
 
+const AFFILIATE_URL = 'https://api.keepgo.icu/register?aff=kPIK';
+
 // --- Theme Context ---
 type Theme = 'light' | 'dark';
 const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void }>({ theme: 'light', toggleTheme: () => {} });
@@ -50,7 +52,7 @@ const MobileHeader: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }
        <button onClick={toggleSidebar} className="p-2 -ml-2 text-gray-600 dark:text-gray-300">
          <Menu className="w-6 h-6" />
        </button>
-       <Link to="/" className="font-bold text-lg text-black dark:text-white">TechnoLogos</Link>
+       <Link to="/" className="font-bold text-lg text-black dark:text-white">keepgo</Link>
        <button onClick={toggleTheme} className="p-2 -mr-2 text-gray-600 dark:text-gray-300">
           {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
        </button>
@@ -70,6 +72,17 @@ const DesktopThemeToggle: React.FC = () => {
     </button>
   );
 }
+
+const TopLeftLink: React.FC = () => (
+  <a
+    href={AFFILIATE_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="fixed top-20 lg:top-6 left-6 z-50 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black text-white text-xs font-medium shadow-sm hover:shadow-md transition-shadow"
+  >
+    注册 / 获取 API
+  </a>
+);
 
 const PostCard: React.FC<{ post: BlogPost }> = ({ post }) => (
   <Link to={`/post/${post.slug}`} className="group block mb-6">
@@ -271,6 +284,7 @@ const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-primary-dark transition-colors duration-300 flex flex-col">
+      <TopLeftLink />
       <DesktopThemeToggle />
       <MobileHeader toggleSidebar={() => setSidebarOpen(true)} />
 

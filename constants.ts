@@ -64,14 +64,14 @@ function stripMarkdown(markdown: string) {
 function estimateReadTime(text: string) {
   const chars = text.replace(/\s+/g, '').length;
   const minutes = Math.max(1, Math.round(chars / 400));
-  return `${minutes} 分钟阅读`;
+  return `${minutes} \u5206\u949f\u9605\u8bfb`;
 }
 
 function parseDateToTimestamp(date: string) {
   const timestamp = Date.parse(date);
   if (Number.isFinite(timestamp)) return timestamp;
 
-  const match = date.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
+  const match = date.match(/^(\d{4})\u5e74(\d{1,2})\u6708(\d{1,2})\u65e5$/);
   if (!match) return 0;
   const year = Number(match[1]);
   const month = Number(match[2]);
