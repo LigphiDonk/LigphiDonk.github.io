@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           关于我
         </NavLink>
         <a
-          href="https://github.com"
+          href="https://github.com/LigphiDonk"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-black dark:hover:text-white transition-all"
