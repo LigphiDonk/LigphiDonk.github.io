@@ -18,3 +18,23 @@ View your app in AI Studio: https://ai.studio/apps/drive/1U-oQ3YVA9l6Zun18oNiO6z
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Write a new post (Markdown)
+
+1. Add a new Markdown file under `posts/`, for example `posts/my-first-post.md`
+2. The filename becomes the default `slug` (you can override by setting `slug:` in frontmatter)
+3. Put required frontmatter at the top:
+
+```md
+---
+title: My Post Title
+date: 2025-12-14
+tags: [AI, Notes]
+excerpt: A short summary (optional, auto-generated if missing)
+readTime: 5 分钟阅读 (optional, auto-generated if missing)
+coverImage: /images/xxx.png (optional)
+---
+
+## Content starts here
+...
+```

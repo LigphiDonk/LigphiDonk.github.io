@@ -1,6 +1,129 @@
 import { BlogPost } from './types';
 
-export const BLOG_POSTS: BlogPost[] = [
+type Frontmatter = Record<string, string | string[]>;
+
+function stripOuterQuotes(value: string) {
+  const trimmed = value.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function parseFrontmatter(rawMarkdown: string): { frontmatter: Frontmatter; content: string } {
+  const normalized = rawMarkdown.replace(/^\uFEFF/, '');
+  const match = normalized.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---[\r\n]+([\s\S]*)$/);
+  if (!match) return { frontmatter: {}, content: rawMarkdown };
+
+  const frontmatterBlock = match[1];
+  const content = match[2];
+  const frontmatter: Frontmatter = {};
+
+  for (const line of frontmatterBlock.split(/\r?\n/)) {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) continue;
+
+    const separatorIndex = trimmedLine.indexOf(':');
+    if (separatorIndex === -1) continue;
+
+    const key = trimmedLine.slice(0, separatorIndex).trim();
+    const rawValue = trimmedLine.slice(separatorIndex + 1).trim();
+    if (!key) continue;
+
+    if (rawValue.startsWith('[') && rawValue.endsWith(']')) {
+      const inner = rawValue.slice(1, -1).trim();
+      frontmatter[key] = inner
+        ? inner.split(',').map(v => stripOuterQuotes(v).trim()).filter(Boolean)
+        : [];
+      continue;
+    }
+
+    frontmatter[key] = stripOuterQuotes(rawValue);
+  }
+
+  return { frontmatter, content };
+}
+
+function stripMarkdown(markdown: string) {
+  return markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/!\[[^\]]*\]\([^\)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^\)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/^\s{0,3}#{1,6}\s+/gm, ' ')
+    .replace(/^\s{0,3}>\s?/gm, ' ')
+    .replace(/\r?\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function estimateReadTime(text: string) {
+  const chars = text.replace(/\s+/g, '').length;
+  const minutes = Math.max(1, Math.round(chars / 400));
+  return `${minutes} 分钟阅读`;
+}
+
+function parseDateToTimestamp(date: string) {
+  const timestamp = Date.parse(date);
+  if (Number.isFinite(timestamp)) return timestamp;
+
+  const match = date.match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
+  if (!match) return 0;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) return 0;
+  return new Date(year, month - 1, day).getTime();
+}
+
+function loadMarkdownPosts(): BlogPost[] {
+  const modules = import.meta.glob('./posts/*.md', {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+  }) as Record<string, string>;
+
+  return Object.entries(modules)
+    .map(([filePath, raw]) => {
+      const normalized = filePath.replace(/\\/g, '/');
+      const fileName = normalized.split('/').pop() ?? normalized;
+      const slugFromFile = fileName.replace(/\.md$/, '');
+      if (!slugFromFile || slugFromFile.startsWith('_')) return null;
+
+      const { frontmatter, content } = parseFrontmatter(raw);
+      const slug = typeof frontmatter.slug === 'string' ? frontmatter.slug : slugFromFile;
+      const title = typeof frontmatter.title === 'string' ? frontmatter.title : slugFromFile;
+      const date = typeof frontmatter.date === 'string' ? frontmatter.date : '1970-01-01';
+      const tags = Array.isArray(frontmatter.tags) ? frontmatter.tags : [];
+      const excerptFromFrontmatter = typeof frontmatter.excerpt === 'string' ? frontmatter.excerpt : undefined;
+      const coverImage = typeof frontmatter.coverImage === 'string' ? frontmatter.coverImage : undefined;
+      const readTimeFromFrontmatter = typeof frontmatter.readTime === 'string' ? frontmatter.readTime : undefined;
+
+      const plainText = stripMarkdown(content);
+      const excerpt = excerptFromFrontmatter ?? plainText.slice(0, 120);
+      const readTime = readTimeFromFrontmatter ?? estimateReadTime(plainText);
+
+      return {
+        id: slug,
+        slug,
+        title,
+        excerpt,
+        date,
+        readTime,
+        tags,
+        coverImage,
+        content,
+      } satisfies BlogPost;
+    })
+    .filter((post): post is BlogPost => Boolean(post))
+    .sort((a, b) => parseDateToTimestamp(b.date) - parseDateToTimestamp(a.date));
+}
+
+const LEGACY_BLOG_POSTS: BlogPost[] = [
   {
     id: '1',
     slug: 'future-of-agi',
@@ -107,3 +230,5 @@ fn main() {
     `
   }
 ];
+
+export const BLOG_POSTS: BlogPost[] = loadMarkdownPosts();
