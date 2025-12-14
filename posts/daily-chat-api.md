@@ -1,9 +1,9 @@
 ---
 title: 日常使用接入 API 教学
 slug: 日常对话使用
-date: 2025年12月11日
+date: 2025-12-11
 readTime: 8 分钟阅读
-tags: [Cherrystudio, chat, api]
+tags: [技术]
 excerpt: 快速教学
 ---
 

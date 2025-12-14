@@ -2,10 +2,10 @@
 title: 国内如何使用最先进的编程工具 Claude Code 与 Codex（Windows）
 slug: claude-code-codex-windows
 date: 2025-12-14
-tags: [AI, Claude, Codex, Windows]
+tags: [技术]
 excerpt: 一份在国内 Windows 环境下安装与配置 Claude Code、Codex 的实用指南。
 ---
-
+首先我推荐去`https://api.keepgo.icu/register?aff=kPIK` keepcode官方站点获得api
 ## Claude code
 
 ### 下面首先介绍windows的配置方法
